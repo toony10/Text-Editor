@@ -1,0 +1,83 @@
+/* ==============================================
+   Text Editor — Reusable TipTap Editor Styles
+   ==============================================
+   Add this CSS to your globals.css (or import it).
+   Requires CSS variables from Shadcn UI theme:
+     --radius-lg, --border, --card, --muted,
+     --muted-foreground, --foreground, --accent,
+     --primary, --primary-foreground, --background
+   ============================================== */
+
+/* Editor wrapper */
+.text-editor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  overflow: hidden;
+}
+
+/* Toolbar */
+.text-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  background: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Toolbar buttons */
+.text-editor-toolbar-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  min-width: 32px;
+  border-radius: 6px;
+  color: var(--muted-foreground);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.text-editor-toolbar-btn:hover {
+  color: var(--foreground);
+  background: var(--accent);
+}
+
+.text-editor-toolbar-btn[data-state="on"] {
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.text-editor-toolbar-btn[data-state="on"]:hover {
+  background: var(--primary);
+  opacity: 0.9;
+}
+
+/* Editor body */
+.text-editor-body {
+  flex: 1;
+  min-height: 200px;
+  background: var(--background);
+}
+
+/* Editor content area (applied via editorProps) */
+.text-editor-content {
+  width: 100%;
+  min-height: 200px;
+  padding: 14px 16px;
+  overflow-y: auto;
+  outline: none;
+}
+
+/* Placeholder text */
+.text-editor-content p.is-editor-empty:first-child::before {
+  color: var(--muted-foreground);
+  content: attr(data-placeholder);
+  float: right;
+  pointer-events: none;
+  height: 0;
+}
