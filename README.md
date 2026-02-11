@@ -17,7 +17,7 @@ The editor provides a toolbar with the following features:
 | Horizontal Rule | Insert horizontal divider |
 | Bullet List | Unordered list |
 | Ordered List | Numbered list |
-| and you can add others, just visit Tip-tap docs
+| And you can add others, just visit [Tip-tap docs] (https://tiptap.dev/)
 
 ## Files
 
