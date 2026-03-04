@@ -8,96 +8,117 @@ import {
     Heading3,
     Highlighter,
     Italic,
+    LinkIcon,
     List,
     ListOrdered,
-    Strikethrough,
-} from "lucide-react";
-import { Toggle } from "@/components/ui/toggle";
-import { Editor } from "@tiptap/react";
-import { MdOutlineHorizontalRule } from "react-icons/md";
+    Quote,
+    Strikethrough
+} from 'lucide-react'
+import { Toggle } from '@/components/ui/toggle'
+import { Editor } from '@tiptap/react'
+import { MdOutlineHorizontalRule } from 'react-icons/md'
 
 export default function MenuBar({ editor }: { editor: Editor | null }) {
     if (!editor) {
-        return null;
+        return null
     }
 
-    const Options = [
+    const options = [
         {
             icon: <AlignRight className="size-4" />,
             onClick: () => editor.chain().focus().setTextAlign('right').run(),
-            preesed: editor.isActive({ textAlign: 'right' }),
+            pressed: editor.isActive({ textAlign: 'right' })
         },
         {
             icon: <AlignCenter className="size-4" />,
             onClick: () => editor.chain().focus().setTextAlign('center').run(),
-            preesed: editor.isActive({ textAlign: 'center' }),
+            pressed: editor.isActive({ textAlign: 'center' })
         },
         {
             icon: <AlignLeft className="size-4" />,
             onClick: () => editor.chain().focus().setTextAlign('left').run(),
-            preesed: editor.isActive({ textAlign: 'left' }),
+            pressed: editor.isActive({ textAlign: 'left' })
         },
         {
             icon: <Heading1 className="size-4" />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
-            preesed: editor.isActive("heading", { level: 1 }),
+            pressed: editor.isActive('heading', { level: 1 })
         },
         {
             icon: <Heading2 className="size-4" />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
-            preesed: editor.isActive("heading", { level: 2 }),
+            pressed: editor.isActive('heading', { level: 2 })
         },
         {
             icon: <Heading3 className="size-4" />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
-            preesed: editor.isActive("heading", { level: 3 }),
+            pressed: editor.isActive('heading', { level: 3 })
+        },
+        {
+            icon: <Quote className="size-4" />,
+            onClick: () => editor.chain().focus().toggleBlockquote().run(),
+            pressed: editor.isActive('blockquote')
         },
         {
             icon: <Bold className="size-4" />,
             onClick: () => editor.chain().focus().toggleBold().run(),
-            preesed: editor.isActive("bold"),
+            pressed: editor.isActive('bold')
         },
         {
             icon: <Italic className="size-4" />,
             onClick: () => editor.chain().focus().toggleItalic().run(),
-            preesed: editor.isActive("italic"),
+            pressed: editor.isActive('italic')
         },
         {
             icon: <Strikethrough className="size-4" />,
             onClick: () => editor.chain().focus().toggleStrike().run(),
-            preesed: editor.isActive("strike"),
+            pressed: editor.isActive('strike')
+        },
+        {
+            icon: <LinkIcon className="size-4" />,
+            onClick: () => {
+                const previousUrl = editor.getAttributes('link').href
+                const url = window.prompt('Enter URL', previousUrl || '')
+
+                if (!url) {
+                    editor.chain().focus().unsetLink().run()
+                    return
+                }
+
+                editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+            },
+            pressed: editor.isActive('link')
         },
         {
             icon: <Highlighter className="size-4" />,
             onClick: () => editor.chain().focus().toggleHighlight().run(),
-            preesed: editor.isActive("highlight"),
+            pressed: editor.isActive('highlight')
         },
         {
             icon: <MdOutlineHorizontalRule className="size-4" />,
             onClick: () => editor.chain().focus().setHorizontalRule().run(),
-            preesed: editor.isActive("horizontalRule"),
+            pressed: editor.isActive('horizontalRule')
         },
         {
             icon: <List className="size-4" />,
             onClick: () => editor.chain().focus().toggleBulletList().run(),
-            preesed: editor.isActive("bulletList"),
+            pressed: editor.isActive('bulletList')
         },
         {
             icon: <ListOrdered className="size-4" />,
             onClick: () => editor.chain().focus().toggleOrderedList().run(),
-            preesed: editor.isActive("orderedList"),
-        },
-
-    ];
+            pressed: editor.isActive('orderedList')
+        }
+    ]
 
     return (
         <div className="text-editor-toolbar">
-            { Options.map((option, index) => (
+            { options.map((option, index) => (
                 <Toggle
                     key={ index }
                     size="sm"
                     variant="default"
-                    pressed={ option.preesed }
+                    pressed={ option.pressed }
                     onPressedChange={ option.onClick }
                     className="text-editor-toolbar-btn"
                 >
